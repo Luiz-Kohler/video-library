@@ -24,7 +24,7 @@ namespace Tests.Unit.Entities
             var cpf = CpfUtils.GerarCpf();
             var dataNascimento = DateTime.MinValue;
 
-            var cliente = new Cliente(criadoPor, nome, cpf, dataNascimento);
+            var cliente = new Cliente(criadoPor, cpf, nome, dataNascimento);
 
             cliente.CriadoPor.Should().Be(criadoPor);
             cliente.Nome.Should().Be(nome);

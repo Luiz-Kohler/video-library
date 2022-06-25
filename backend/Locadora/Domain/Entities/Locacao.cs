@@ -1,4 +1,5 @@
 ﻿using Domain.Common;
+using Domain.Common.Enums;
 
 namespace Domain.Entities
 {
@@ -6,7 +7,7 @@ namespace Domain.Entities
     {
         public DateTime DataLocacao { get; private set; }
         public DateTime DataDevolucao { get; private set; }
-        public bool FoiDevolvido { get; private set; }
+        public StatusLocacao Status { get; private set; }
         public int ClienteId { get; private set; }
         public virtual Cliente Cliente { get; private set; }
         public int FilmeId { get; private set; }
@@ -21,25 +22,18 @@ namespace Domain.Entities
             FilmeId = filme.Id;
             Filme = filme;
             DataDevolucao = CalcularDataDevolucao();
+            Status = StatusLocacao.Andamento;
         }
 
-        public Locacao(string criadoPor, Cliente cliente, Filme filme)
+        public Locacao(string criadoPor, int clienteId, int filmeId)
             : base(criadoPor)
         {
             DataLocacao = DateTime.UtcNow;
-            ClienteId = cliente.Id;
-            Cliente = cliente;
-            FilmeId = filme.Id;
-            Filme = filme;
+            ClienteId = clienteId;
+            FilmeId = filmeId;
             DataDevolucao = CalcularDataDevolucao();
+            Status = StatusLocacao.Andamento;
         }
-
-        public void Devolvido(string atualizadoPor)
-        {
-            FoiDevolvido = true;
-            AtualizarEntidadeBase(atualizadoPor);
-        }
-
 
         private DateTime CalcularDataDevolucao()
         {

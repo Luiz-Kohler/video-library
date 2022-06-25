@@ -1,10 +1,8 @@
 ﻿using Bogus;
 using Domain.Entities;
-using FizzWare.NBuilder;
 using FluentAssertions;
 using System;
 using Tests.Common.Builders;
-using Tests.Common.Helpers;
 using Xunit;
 
 namespace Tests.Unit.Entities
@@ -21,7 +19,7 @@ namespace Tests.Unit.Entities
         [Fact]
         public void Deve_criar_locacao_com_data_locacao()
         {
-            var cliente = new ClienteBuilder().Construir(); 
+            var cliente = new ClienteBuilder().Construir();
             var filme = new FilmeBuilder().Construir();
 
             var criadoPor = _faker.Name.FirstName();
@@ -42,7 +40,7 @@ namespace Tests.Unit.Entities
             var criadoPor = _faker.Name.FirstName();
             var dataAtual = DateTime.UtcNow;
 
-            var locacao = new Locacao(criadoPor, cliente, filme);
+            var locacao = new Locacao(criadoPor, cliente.Id, filme.Id);
 
             locacao.CriadoPor.Should().Be(criadoPor);
             locacao.DataLocacao.Should().BeCloseTo(dataAtual, TimeSpan.FromSeconds(10));
@@ -61,7 +59,7 @@ namespace Tests.Unit.Entities
 
             var diasParaDevolver = filmeEhLancamento ? 2 : 3;
 
-            var locacao = new Locacao(criadoPor, cliente, filme);
+            var locacao = new Locacao(criadoPor, cliente.Id, filme.Id);
 
             locacao.CriadoPor.Should().Be(criadoPor);
             locacao.DataLocacao.Should().BeCloseTo(dataAtual, TimeSpan.FromSeconds(10));

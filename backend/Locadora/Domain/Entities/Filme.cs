@@ -8,7 +8,7 @@ namespace Domain.Entities
         public string Titulo { get; private set; }
         public Classificacao Classificacao { get; private set; }
         public bool EhLancamento { get; private set; }
-        public virtual ICollection<Locacao> Locacoes { get; private set; }
+        public virtual ICollection<Locacao> Locacoes { get; }
 
         public Filme(string criadoPor, string titulo, Classificacao classificacao, bool ehLancamento)
             : base(criadoPor)

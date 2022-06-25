@@ -16,7 +16,15 @@
       "launchUrl": "swagger",
       "applicationUrl": "https://localhost:7075;http://localhost:5075",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "timezone": "E. South America Standard Time",
+        "mysql_server": "localhost",
+        "mysql_port": "3306",
+        "mysql_database": "locadora",
+        "mysql_user": "root",
+        "mysql_password": "Root@20222",
+        "mysql_persist_security_info": "False",
+        "mysql_connect_timeout": "300"
       }
     },
     "IIS Express": {
@@ -24,7 +32,15 @@
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "timezone": "E. South America Standard Time",
+        "mysql_server": "localhost",
+        "mysql_port": "3306",
+        "mysql_database": "locadora",
+        "mysql_user": "root",
+        "mysql_password": "Root@20222",
+        "mysql_persist_security_info": "False",
+        "mysql_connect_timeout": "300"
       }
     }
   }
