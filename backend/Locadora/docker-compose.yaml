@@ -16,7 +16,7 @@ services:
       MYSQL_PASSWORD: 'Root@2022'
 
   api:
-    image: api-locadora:8
+    image: api-locadora:22
     ports:
      - "5000:5000"
     build: 

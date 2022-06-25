@@ -1,4 +1,4 @@
-﻿{
+{
   "$schema": "https://json.schemastore.org/launchsettings.json",
   "iisSettings": {
     "windowsAuthentication": false,
@@ -34,11 +34,11 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "timezone": "E. South America Standard Time",
-        "mysql_server": "localhost",
+        "mysql_server": "host.docker.internal",
         "mysql_port": "3306",
         "mysql_database": "locadora",
         "mysql_user": "root",
-        "mysql_password": "Root@20222",
+        "mysql_password": "Root@2022",
         "mysql_persist_security_info": "False",
         "mysql_connect_timeout": "300"
       }

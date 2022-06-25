@@ -13,8 +13,7 @@ namespace Infrastructure.Database.Common
                 Database = EnvironmentVariables.MySqlDatabase,
                 UserID = EnvironmentVariables.MySqlUser,
                 Password = EnvironmentVariables.MySqlPassword,
-                ConnectionTimeout = EnvironmentVariables.MySqlConnectTimeout,
-                PersistSecurityInfo = EnvironmentVariables.MySqlPersistSecurityInfo
+                Port = EnvironmentVariables.MySqlPort,
             }.ToString();
         }
     }
