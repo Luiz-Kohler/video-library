@@ -28,7 +28,7 @@ namespace Tests.Unit.Entities
 
             cliente.CriadoPor.Should().Be(criadoPor);
             cliente.Nome.Should().Be(nome);
-            cliente.CPF.Should().Be(cpf);
+            cliente.Cpf.Should().Be(cpf);
             cliente.DataNascimento.Should().Be(dataNascimento);
         }
     }
