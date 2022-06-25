@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  mysql:
+    image: mysql:latest
+    volumes:
+      - mysql:/data/mysql
+    ports:
+      - 3306:3306
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: 'locadora'
+      MYSQL_ROOT_PASSWORD: 'Root@2022'
+      MYSQL_PASSWORD: 'Root@2022'
+
+volumes:
+  mysql:

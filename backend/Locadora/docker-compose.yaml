@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  mysql:
+    image: mysql:latest
+    ports:
+     - "3306:3306"
+    volumes:
+      - mysql:/data/mysql
+    restart: always
+    environment:
+      MYSQL_SERVER: 'localhost'
+      MYSQL_DATABASE: 'locadora'
+      MYSQL_USER: 'root'
+      MYSQL_ROOT_PASSWORD: 'Root@2022'
+      MYSQL_PASSWORD: 'Root@2022'
+
+  api:
+    image: api-locadora:8
+    ports:
+     - "5000:5000"
+    build: 
+      context: .
+      dockerfile: .
+    depends_on: 
+      - mysql
+
+volumes:
+  mysql:
