@@ -2,10 +2,10 @@
 
 namespace Tests.Common.Helpers
 {
-    public class BaseEntityForTests : BaseEntity
+    public class BaseEntityForTests : BaseEntity<BaseEntityForTests>
     {
-        public BaseEntityForTests(string criadoPor) 
-            : base(criadoPor)
+        public BaseEntityForTests() 
+            : base()
         {
         }
     }

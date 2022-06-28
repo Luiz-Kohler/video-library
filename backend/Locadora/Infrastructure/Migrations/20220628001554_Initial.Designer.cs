@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20220625022920_Initial")]
+    [Migration("20220628001554_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,11 +36,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("DATETIME")
                         .HasColumnName("criado_em");
 
-                    b.Property<string>("CriadoPor")
-                        .IsRequired()
-                        .HasColumnType("VARCHAR(100)")
-                        .HasColumnName("criado_por");
-
                     b.Property<DateTime>("DataNascimento")
                         .HasColumnType("DATETIME")
                         .HasColumnName("data_nascimento");
@@ -57,10 +52,6 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime?>("UltimaAtualizacaoEm")
                         .HasColumnType("DATETIME")
                         .HasColumnName("ultima_atualizacao_em");
-
-                    b.Property<string>("UltimaAtualizacaoPor")
-                        .HasColumnType("VARCHAR(100)")
-                        .HasColumnName("ultima_atualizacao_por");
 
                     b.HasKey("Id");
 
@@ -87,11 +78,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("DATETIME")
                         .HasColumnName("criado_em");
 
-                    b.Property<string>("CriadoPor")
-                        .IsRequired()
-                        .HasColumnType("VARCHAR(100)")
-                        .HasColumnName("criado_por");
-
                     b.Property<bool>("EhAtivo")
                         .HasColumnType("tinyint(1)")
                         .HasColumnName("ativo");
@@ -108,10 +94,6 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime?>("UltimaAtualizacaoEm")
                         .HasColumnType("DATETIME")
                         .HasColumnName("ultima_atualizacao_em");
-
-                    b.Property<string>("UltimaAtualizacaoPor")
-                        .HasColumnType("VARCHAR(100)")
-                        .HasColumnName("ultima_atualizacao_por");
 
                     b.HasKey("Id");
 
@@ -137,11 +119,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("DATETIME")
                         .HasColumnName("criado_em");
 
-                    b.Property<string>("CriadoPor")
-                        .IsRequired()
-                        .HasColumnType("VARCHAR(100)")
-                        .HasColumnName("criado_por");
-
                     b.Property<DateTime>("DataDevolucao")
                         .HasColumnType("DATETIME")
                         .HasColumnName("data_devolucao");
@@ -164,10 +141,6 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime?>("UltimaAtualizacaoEm")
                         .HasColumnType("DATETIME")
                         .HasColumnName("ultima_atualizacao_em");
-
-                    b.Property<string>("UltimaAtualizacaoPor")
-                        .HasColumnType("VARCHAR(100)")
-                        .HasColumnName("ultima_atualizacao_por");
 
                     b.HasKey("Id");
 

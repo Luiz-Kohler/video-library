@@ -25,11 +25,7 @@ namespace Infrastructure.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     data_nascimento = table.Column<DateTime>(type: "DATETIME", nullable: false),
                     criado_em = table.Column<DateTime>(type: "DATETIME", nullable: false),
-                    criado_por = table.Column<string>(type: "VARCHAR(100)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
                     ultima_atualizacao_em = table.Column<DateTime>(type: "DATETIME", nullable: true),
-                    ultima_atualizacao_por = table.Column<string>(type: "VARCHAR(100)", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
                     ativo = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
@@ -49,11 +45,7 @@ namespace Infrastructure.Migrations
                     classificacao = table.Column<int>(type: "int", nullable: false),
                     lancamento = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     criado_em = table.Column<DateTime>(type: "DATETIME", nullable: false),
-                    criado_por = table.Column<string>(type: "VARCHAR(100)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
                     ultima_atualizacao_em = table.Column<DateTime>(type: "DATETIME", nullable: true),
-                    ultima_atualizacao_por = table.Column<string>(type: "VARCHAR(100)", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
                     ativo = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
@@ -74,11 +66,7 @@ namespace Infrastructure.Migrations
                     ClienteId = table.Column<int>(type: "int", nullable: false),
                     FilmeId = table.Column<int>(type: "int", nullable: false),
                     criado_em = table.Column<DateTime>(type: "DATETIME", nullable: false),
-                    criado_por = table.Column<string>(type: "VARCHAR(100)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
                     ultima_atualizacao_em = table.Column<DateTime>(type: "DATETIME", nullable: true),
-                    ultima_atualizacao_por = table.Column<string>(type: "VARCHAR(100)", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
                     ativo = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>

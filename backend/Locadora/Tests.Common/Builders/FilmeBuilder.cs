@@ -12,7 +12,6 @@ namespace Tests.Common.Builders
         public Filme Construir()
         {
             return new Filme(
-                _criadoPor ?? _faker.Name.FirstName(),
                 _titulo ?? _faker.Random.String(),
                 _classificacao ?? Classificacao.Dez,
                 _ehLancamento ?? _faker.Random.Bool());

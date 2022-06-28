@@ -12,7 +12,6 @@ namespace Tests.Common.Builders
         public Cliente Construir()
         {
             return new Cliente(
-                _criadoPor ?? _faker.Name.FirstName(), 
                 _nome ?? _faker.Name.FirstName(), 
                 _cpf ?? CpfUtils.GerarCpf(), 
                 _dataNascimento ?? DateTime.UtcNow);

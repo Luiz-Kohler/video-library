@@ -11,7 +11,6 @@ namespace Tests.Common.Builders
         public Locacao Construir()
         {
             return new Locacao(
-                _criadoPor ?? _faker.Name.FirstName(),
                 _dataLocacao ?? DateTime.UtcNow,
                 _cliente ?? new ClienteBuilder().Construir(),
                 _filme ?? new FilmeBuilder().Construir());

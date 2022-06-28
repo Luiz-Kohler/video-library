@@ -1,9 +1,10 @@
 ﻿using Domain.Common;
 using Domain.Common.Enums;
+using Domain.Common.Validators;
 
 namespace Domain.Entities
 {
-    public class Locacao : BaseEntity
+    public class Locacao : BaseEntity<Locacao>
     {
         public DateTime DataLocacao { get; private set; }
         public DateTime DataDevolucao { get; private set; }
@@ -13,10 +14,10 @@ namespace Domain.Entities
         public int FilmeId { get; private set; }
         public virtual Filme Filme { get; private set; }
 
-        public Locacao(string criadoPor, DateTime dataLocacao, Cliente cliente, Filme filme)
-            : base(criadoPor)
+        public Locacao(Cliente cliente, Filme filme)
+            : base()
         {
-            DataLocacao = dataLocacao.ToUniversalTime();
+            DataLocacao = DateTime.UtcNow;
             ClienteId = cliente.Id;
             Cliente = cliente;
             FilmeId = filme.Id;
@@ -25,14 +26,23 @@ namespace Domain.Entities
             Status = StatusLocacao.Andamento;
         }
 
-        public Locacao(string criadoPor, int clienteId, int filmeId)
-            : base(criadoPor)
+        protected Locacao(int clienteId, int filmeId, DateTime dataLocacao, DateTime dataDevolucao)
+            : base()
         {
             DataLocacao = DateTime.UtcNow;
             ClienteId = clienteId;
             FilmeId = filmeId;
-            DataDevolucao = CalcularDataDevolucao();
+            DataLocacao = dataLocacao;
+            DataDevolucao = dataDevolucao;
             Status = StatusLocacao.Andamento;
+        }
+
+        public void AtualizarLocacao(Cliente cliente, Filme filme)
+        {
+            ClienteId = cliente.Id;
+            Cliente = cliente;
+            FilmeId = filme.Id;
+            Filme = filme;
         }
 
         private DateTime CalcularDataDevolucao()

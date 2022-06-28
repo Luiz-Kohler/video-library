@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "Web": {
+    "DB - LOCALHOST": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
@@ -27,8 +27,9 @@
         "mysql_connect_timeout": "300"
       }
     },
-    "IIS Express": {
+    "DB - DOCKER": {
       "commandName": "IISExpress",
+      "dotnetRunMessages": true,
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {

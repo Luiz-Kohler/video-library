@@ -20,34 +20,24 @@ namespace Tests.Unit.Entities
         [Fact]
         public void Deve_criar_entidade_base()
         {
-            var criadoPor = _faker.Name.FirstName();
-
-            var entidadeBase = new BaseEntityForTests(criadoPor);
+            var entidadeBase = new BaseEntityForTests();
 
             entidadeBase.Id.Should().Be(0);
             entidadeBase.EhAtivo.Should().BeTrue();
             entidadeBase.UltimaAtualizacaoEm.Should().BeNull();
-            entidadeBase.UltimaAtualizacaoPor.Should().BeNull();
-            entidadeBase.CriadoPor.Should().Be(criadoPor);
             entidadeBase.CriadoEm.Should().BeCloseTo(_dataAtual, TimeSpan.FromSeconds(10));
         }
 
         [Fact]
         public void Deve_atualizar_entidade_base()
         {
-            var criadoPor = _faker.Name.FirstName();
-            var atualizadoPor = _faker.Random.String();
-
-            var entidadeBase = new BaseEntityForTests(criadoPor);
+            var entidadeBase = new BaseEntityForTests();
             entidadeBase.UltimaAtualizacaoEm.Should().BeNull();
-            entidadeBase.UltimaAtualizacaoPor.Should().BeNull();
 
-            entidadeBase.AtualizarEntidadeBase(atualizadoPor);
+            entidadeBase.AtualizarEntidadeBase();
 
             entidadeBase.Id.Should().Be(0);
             entidadeBase.EhAtivo.Should().BeTrue();
-            entidadeBase.UltimaAtualizacaoPor.Should().Be(atualizadoPor);
-            entidadeBase.CriadoPor.Should().Be(criadoPor);
             entidadeBase.UltimaAtualizacaoEm.Should().BeCloseTo(_dataAtual, TimeSpan.FromSeconds(10));
             entidadeBase.CriadoEm.Should().BeCloseTo(_dataAtual, TimeSpan.FromSeconds(10));
         }
@@ -55,17 +45,12 @@ namespace Tests.Unit.Entities
         [Fact]
         public void Deve_desativar_entidade_base()
         {
-            var criadoPor = _faker.Name.FirstName();
-            var atualizadoPor = _faker.Random.String();
-
-            var entidadeBase = new BaseEntityForTests(criadoPor);
+            var entidadeBase = new BaseEntityForTests();
             entidadeBase.EhAtivo.Should().BeTrue();
 
-            entidadeBase.Desativar(atualizadoPor);
+            entidadeBase.Desativar();
 
             entidadeBase.Id.Should().Be(0);
-            entidadeBase.UltimaAtualizacaoPor.Should().Be(atualizadoPor);
-            entidadeBase.CriadoPor.Should().Be(criadoPor);
             entidadeBase.UltimaAtualizacaoEm.Should().BeCloseTo(_dataAtual, TimeSpan.FromSeconds(10));
             entidadeBase.CriadoEm.Should().BeCloseTo(_dataAtual, TimeSpan.FromSeconds(10));
         }
@@ -73,19 +58,13 @@ namespace Tests.Unit.Entities
         [Fact]
         public void Deve_ativar_entidade_base()
         {
-            var criadoPor = _faker.Name.FirstName();
-            var atualizadoPor = _faker.Random.String();
-
-            var entidadeBase = new BaseEntityForTests(criadoPor);
-            entidadeBase.Desativar(atualizadoPor);
+            var entidadeBase = new BaseEntityForTests();
             entidadeBase.EhAtivo.Should().BeFalse();
 
-            entidadeBase.Ativar(atualizadoPor);
+            entidadeBase.Ativar();
 
             entidadeBase.Id.Should().Be(0);
             entidadeBase.EhAtivo.Should().BeTrue();
-            entidadeBase.UltimaAtualizacaoPor.Should().Be(atualizadoPor);
-            entidadeBase.CriadoPor.Should().Be(criadoPor);
             entidadeBase.UltimaAtualizacaoEm.Should().BeCloseTo(_dataAtual, TimeSpan.FromSeconds(10));
             entidadeBase.CriadoEm.Should().BeCloseTo(_dataAtual, TimeSpan.FromSeconds(10));
         }

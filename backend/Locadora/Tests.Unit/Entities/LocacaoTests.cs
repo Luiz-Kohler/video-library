@@ -22,12 +22,10 @@ namespace Tests.Unit.Entities
             var cliente = new ClienteBuilder().Construir();
             var filme = new FilmeBuilder().Construir();
 
-            var criadoPor = _faker.Name.FirstName();
             var dataLocacao = DateTime.MinValue.ToUniversalTime();
 
-            var locacao = new Locacao(criadoPor, dataLocacao, cliente, filme);
+            var locacao = new Locacao(dataLocacao, cliente, filme);
 
-            locacao.CriadoPor.Should().Be(criadoPor);
             locacao.DataLocacao.Should().Be(dataLocacao);
         }
 
@@ -37,12 +35,10 @@ namespace Tests.Unit.Entities
             var cliente = new ClienteBuilder().Construir();
             var filme = new FilmeBuilder().Construir();
 
-            var criadoPor = _faker.Name.FirstName();
             var dataAtual = DateTime.UtcNow;
 
-            var locacao = new Locacao(criadoPor, cliente.Id, filme.Id);
+            var locacao = new Locacao(cliente.Id, filme.Id);
 
-            locacao.CriadoPor.Should().Be(criadoPor);
             locacao.DataLocacao.Should().BeCloseTo(dataAtual, TimeSpan.FromSeconds(10));
         }
 
@@ -54,14 +50,12 @@ namespace Tests.Unit.Entities
             var cliente = new ClienteBuilder().Construir();
             var filme = new FilmeBuilder().ComEhLancamento(filmeEhLancamento).Construir();
 
-            var criadoPor = _faker.Name.FirstName();
             var dataAtual = DateTime.UtcNow;
 
             var diasParaDevolver = filmeEhLancamento ? 2 : 3;
 
-            var locacao = new Locacao(criadoPor, cliente.Id, filme.Id);
+            var locacao = new Locacao(cliente.Id, filme.Id);
 
-            locacao.CriadoPor.Should().Be(criadoPor);
             locacao.DataLocacao.Should().BeCloseTo(dataAtual, TimeSpan.FromSeconds(10));
             locacao.DataDevolucao.Date.Should().Be(dataAtual.AddDays(diasParaDevolver).Date);
         }

@@ -1,36 +1,49 @@
-﻿namespace Domain.Common
+﻿using FluentValidation;
+using FluentValidation.Results;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Domain.Common
 {
-    public abstract class BaseEntity
+    public abstract class BaseEntity<TEntity> where TEntity : class
     {
         public int Id { get; }
         public DateTime CriadoEm { get; private init; }
-        public string CriadoPor { get; private init; }
         public DateTime? UltimaAtualizacaoEm { get; protected set; }
-        public string UltimaAtualizacaoPor { get; protected set; }
         public bool EhAtivo { get; private set; }
 
-        public BaseEntity(string criadoPor)
+        [NotMapped]
+        public List<ValidationFailure> Erros { get; protected set; }
+        public bool IsValid() => !Erros.Any();
+        public bool IsInvalid() => Erros.Any();
+
+        public BaseEntity()
         {
             CriadoEm = DateTime.UtcNow;
-            CriadoPor = criadoPor;
             EhAtivo = true;
         }
 
-        public void Desativar(string atualizadoPor)
+        public void Desativar()
         {
             EhAtivo = false;
-            AtualizarEntidadeBase(atualizadoPor);
         }
-        public void Ativar(string atualizadoPor)
+        public void Ativar()
         {
             EhAtivo = true;
-            AtualizarEntidadeBase(atualizadoPor);
         }
 
-        public void AtualizarEntidadeBase(string atualizadoPor)
+        public void AtualizarEntidadeBase()
         {
             UltimaAtualizacaoEm = DateTime.UtcNow;
-            UltimaAtualizacaoPor = atualizadoPor;
+        }
+
+        public virtual void Validar<TEntityValidator>() where TEntityValidator : AbstractValidator<TEntity>
+        {
+            var validator = Activator.CreateInstance(typeof(TEntityValidator)) as AbstractValidator<TEntity>;
+
+            if (validator is null)
+                throw new Exception("Classe de validação invalida");
+
+            Erros = validator.Validate(this as TEntity).Errors;
         }
     }
 }
