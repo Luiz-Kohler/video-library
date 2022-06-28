@@ -1,5 +1,7 @@
 ﻿using Domain.Entities;
 using Domain.IRepositories;
+using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace Infrastructure.Database.Repositories
 {
@@ -13,6 +15,14 @@ namespace Infrastructure.Database.Repositories
         {
             filme.Ativar();
             await Atualizar(filme);
+        }
+
+        public async Task<IList<Filme>> SelecionarVariasPorIncluindoLocacoes(Expression<Func<Filme, bool>> filtro = null)
+        {
+            if (filtro == null)
+                return await Entity.Include(filme => filme.Locacoes).ToListAsync();
+
+            return await Entity.Include(filme => filme.Locacoes).Where(filtro).ToListAsync();
         }
     }
 }

@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Web.Controllers
 {
     [Route("clientes")]
-    public class ClientesController : Controller
+    public class ClientesController : BaseController
     {
         private readonly IMediator _mediator;
 
