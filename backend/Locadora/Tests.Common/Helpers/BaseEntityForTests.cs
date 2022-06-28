@@ -2,7 +2,7 @@
 
 namespace Tests.Common.Helpers
 {
-    public class BaseEntityForTests : BaseEntity<BaseEntityForTests>
+    public class BaseEntityForTests : BaseEntity
     {
         public BaseEntityForTests() 
             : base()

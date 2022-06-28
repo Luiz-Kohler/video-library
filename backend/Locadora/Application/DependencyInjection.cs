@@ -1,4 +1,5 @@
 ﻿using Application.Common.AutoMapper;
+using Application.Common.Csv;
 using Application.Common.UnitOfWork;
 using Application.Common.Validation;
 using AutoMapper;
@@ -13,10 +14,14 @@ namespace Application
     {
         public static void AddApplication(this IServiceCollection services)
         {
+            services.AddSingleton<ICsvService, CsvService>();
+
             services.AddScoped<IRollbackActionsExecuter, RollbackActionsExecuter>();
 
             services.AddFluentValidation(Assembly.GetExecutingAssembly());
             services.AddMediatR(Assembly.GetExecutingAssembly());
+
+
 
             services.AddMiddlewares();
             services.AddAutoMapper();

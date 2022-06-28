@@ -61,8 +61,8 @@ namespace Infrastructure.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     data_locacao = table.Column<DateTime>(type: "DATETIME", nullable: false),
-                    data_devolucao = table.Column<DateTime>(type: "DATETIME", nullable: false),
-                    status = table.Column<int>(type: "int", nullable: false),
+                    DataPrazoDevolucao = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    data_devolucao = table.Column<DateTime>(type: "DATETIME", nullable: true),
                     ClienteId = table.Column<int>(type: "int", nullable: false),
                     FilmeId = table.Column<int>(type: "int", nullable: false),
                     criado_em = table.Column<DateTime>(type: "DATETIME", nullable: false),
@@ -131,11 +131,6 @@ namespace Infrastructure.Migrations
                 name: "IX_locacoes_FilmeId",
                 table: "locacoes",
                 column: "FilmeId");
-
-            migrationBuilder.CreateIndex(
-                name: "ix_status_ativo",
-                table: "locacoes",
-                columns: new[] { "status", "ativo" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

@@ -1,9 +1,8 @@
 ﻿using Domain.Common;
-using Domain.Common.Validators;
 
 namespace Domain.Entities
 {
-    public class Cliente : BaseEntity<Cliente>
+    public class Cliente : BaseEntity
     {
         public string Cpf { get; private set; }
         public string Nome { get; private set; }
@@ -15,9 +14,7 @@ namespace Domain.Entities
         {
             Nome = nome;
             Cpf = cpf;
-            DataNascimento = dataNascimento;
-
-            Validar<ClientesValidator>();
+            DataNascimento = TimeZoneInfo.ConvertTimeToUtc(dataNascimento);
         }
 
         public void Atualizar(string nome, DateTime dataNascimento)

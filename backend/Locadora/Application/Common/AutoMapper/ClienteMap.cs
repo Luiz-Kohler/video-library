@@ -17,9 +17,11 @@ namespace Application.Common.AutoMapper
                 .ConstructUsing(request => new Cliente(request.Cpf.FormatCpf(), request.Nome, request.DataNascimento));
 
             CreateMap<Cliente, ClienteResponse>()
-                .ForMember(response => response.Status, opt => opt.MapFrom(cliente => BuscarClienteStatus(cliente)));
+                .ForMember(response => response.Status, opt => opt.MapFrom(cliente => BuscarClienteStatus(cliente)))
+                .ForMember(response => response.DataNascimento, opt => opt.MapFrom(cliente => cliente.DataNascimento.ToLocalTime()));
 
-            CreateMap<Cliente, BuscarClienteResponse>();
+            CreateMap<Cliente, BuscarClienteResponse>()
+                .ForMember(response => response.DataNascimento, opt => opt.MapFrom(cliente => TimeZoneInfo.ConvertTimeBySystemTimeZoneId(cliente.DataNascimento, TimeZone.CurrentTimeZone.StandardName)));
 
             CreateMap<Cliente, ClienteForLocacao>();
         }

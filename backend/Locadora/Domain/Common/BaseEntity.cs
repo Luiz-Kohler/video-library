@@ -1,20 +1,13 @@
 ﻿using FluentValidation;
-using FluentValidation.Results;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Common
 {
-    public abstract class BaseEntity<TEntity> where TEntity : class
+    public abstract class BaseEntity
     {
-        public int Id { get; }
+        public int Id { get; protected set;  }
         public DateTime CriadoEm { get; private init; }
         public DateTime? UltimaAtualizacaoEm { get; protected set; }
         public bool EhAtivo { get; private set; }
-
-        [NotMapped]
-        public List<ValidationFailure> Erros { get; protected set; }
-        public bool IsValid() => !Erros.Any();
-        public bool IsInvalid() => Erros.Any();
 
         public BaseEntity()
         {
@@ -25,25 +18,18 @@ namespace Domain.Common
         public void Desativar()
         {
             EhAtivo = false;
+            AtualizarEntidadeBase();
         }
+
         public void Ativar()
         {
             EhAtivo = true;
+            AtualizarEntidadeBase();
         }
 
         public void AtualizarEntidadeBase()
         {
             UltimaAtualizacaoEm = DateTime.UtcNow;
-        }
-
-        public virtual void Validar<TEntityValidator>() where TEntityValidator : AbstractValidator<TEntity>
-        {
-            var validator = Activator.CreateInstance(typeof(TEntityValidator)) as AbstractValidator<TEntity>;
-
-            if (validator is null)
-                throw new Exception("Classe de validação invalida");
-
-            Erros = validator.Validate(this as TEntity).Errors;
         }
     }
 }

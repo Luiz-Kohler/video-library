@@ -1,4 +1,4 @@
-﻿using Infrastructure.Environments;
+﻿using Domain.Common.Environments;
 using MySql.Data.MySqlClient;
 
 namespace Infrastructure.Database.Common

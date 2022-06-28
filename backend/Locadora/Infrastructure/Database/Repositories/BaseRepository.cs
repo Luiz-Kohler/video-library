@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 namespace Infrastructure.Database.Repositories
 {
     public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity>
-    where TEntity : BaseEntity<TEntity>
+    where TEntity : BaseEntity
     {
         protected readonly DatabaseContext Context;
         protected readonly DbSet<TEntity> Entity;
@@ -20,6 +20,12 @@ namespace Infrastructure.Database.Repositories
         public Task Atualizar(TEntity entidade)
         {
             Entity.Update(entidade);
+            return Task.CompletedTask;
+        }
+
+        public Task AtualizarVarios(IEnumerable<TEntity> entidades)
+        {
+            Entity.UpdateRange(entidades);
             return Task.CompletedTask;
         }
 

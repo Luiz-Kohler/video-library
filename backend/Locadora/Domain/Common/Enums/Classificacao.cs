@@ -2,6 +2,7 @@
 {
     public enum Classificacao
     {
+        Livre = 0,
         Dez = 10,
         Doze = 12,
         Catorze = 14,

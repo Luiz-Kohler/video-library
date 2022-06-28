@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace Infrastructure.Database.Common
 {
     public abstract class BaseMapping<TEntity> : IBaseMapping
-        where TEntity : BaseEntity<TEntity>
+        where TEntity : BaseEntity
     {
         public abstract string TableName { get; }
 
@@ -20,9 +20,6 @@ namespace Infrastructure.Database.Common
         private void MapearBase(EntityTypeBuilder<TEntity> builder)
         {
             builder.ToTable(TableName);
-
-            builder.HasKey(e => e.Id);
-            builder.Property(e => e.Id).ValueGeneratedOnAdd();
 
             builder.Property(e => e.CriadoEm).HasColumnName("criado_em").HasColumnType("DATETIME").IsRequired();
             builder.Property(e => e.UltimaAtualizacaoEm).HasColumnName("ultima_atualizacao_em").HasColumnType("DATETIME").IsRequired(false);

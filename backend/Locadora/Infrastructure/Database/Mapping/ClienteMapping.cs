@@ -11,6 +11,9 @@ namespace Infrastructure.Database.Mapping
 
         protected override void MapearEntidade(EntityTypeBuilder<Cliente> builder)
         {
+            builder.HasKey(c => c.Id);
+            builder.Property(c => c.Id).ValueGeneratedOnAdd();
+
             builder.Property(c => c.Nome).HasColumnName("nome").HasColumnType("VARCHAR(200)").IsRequired();
             builder.Property(c => c.Cpf).HasColumnName("cpf").HasColumnType("VARCHAR(11)").IsRequired();
             builder.Property(c => c.DataNascimento).HasColumnName("data_nascimento").HasColumnType("DATETIME").IsRequired();

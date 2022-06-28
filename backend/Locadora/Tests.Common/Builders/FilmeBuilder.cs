@@ -5,6 +5,7 @@ namespace Tests.Common.Builders
 {
     public class FilmeBuilder : BaseBuilder<FilmeBuilder>
     {
+        private int? _id;
         private string _titulo;
         private Classificacao? _classificacao;
         private bool? _ehLancamento;
@@ -12,9 +13,17 @@ namespace Tests.Common.Builders
         public Filme Construir()
         {
             return new Filme(
+                _id ?? 1,
                 _titulo ?? _faker.Random.String(),
                 _classificacao ?? Classificacao.Dez,
                 _ehLancamento ?? _faker.Random.Bool());
+        }
+
+
+        public FilmeBuilder ComId(int id)
+        {
+            _id = id;
+            return this;
         }
 
         public FilmeBuilder ComTitulo(string titulo)

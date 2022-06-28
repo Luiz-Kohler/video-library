@@ -54,19 +54,5 @@ namespace Tests.Unit.Entities
             entidadeBase.UltimaAtualizacaoEm.Should().BeCloseTo(_dataAtual, TimeSpan.FromSeconds(10));
             entidadeBase.CriadoEm.Should().BeCloseTo(_dataAtual, TimeSpan.FromSeconds(10));
         }
-
-        [Fact]
-        public void Deve_ativar_entidade_base()
-        {
-            var entidadeBase = new BaseEntityForTests();
-            entidadeBase.EhAtivo.Should().BeFalse();
-
-            entidadeBase.Ativar();
-
-            entidadeBase.Id.Should().Be(0);
-            entidadeBase.EhAtivo.Should().BeTrue();
-            entidadeBase.UltimaAtualizacaoEm.Should().BeCloseTo(_dataAtual, TimeSpan.FromSeconds(10));
-            entidadeBase.CriadoEm.Should().BeCloseTo(_dataAtual, TimeSpan.FromSeconds(10));
-        }
     }
 }

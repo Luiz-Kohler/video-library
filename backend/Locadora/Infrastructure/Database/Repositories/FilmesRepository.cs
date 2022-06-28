@@ -8,5 +8,11 @@ namespace Infrastructure.Database.Repositories
         public FilmesRepository(DatabaseContext context) : base(context)
         {
         }
+
+        public async Task Ativar(Filme filme)
+        {
+            filme.Ativar();
+            await Atualizar(filme);
+        }
     }
 }

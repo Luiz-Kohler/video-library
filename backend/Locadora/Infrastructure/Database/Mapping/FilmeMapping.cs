@@ -11,6 +11,9 @@ namespace Infrastructure.Database.Mapping
 
         protected override void MapearEntidade(EntityTypeBuilder<Filme> builder)
         {
+            builder.HasKey(f => f.Id);
+            builder.Property(f => f.Id).IsUnicode();
+
             builder.Property(f => f.Titulo).HasColumnName("titulo").HasColumnType("VARCHAR(100)").IsRequired();
             builder.Property(f => f.EhLancamento).HasColumnName("lancamento").IsRequired();
             builder.Property(f => f.Classificacao).HasColumnName("classificacao").IsRequired();

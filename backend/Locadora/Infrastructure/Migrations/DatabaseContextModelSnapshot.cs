@@ -66,6 +66,7 @@ namespace Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .IsUnicode(true)
                         .HasColumnType("int");
 
                     b.Property<int>("Classificacao")
@@ -117,7 +118,7 @@ namespace Infrastructure.Migrations
                         .HasColumnType("DATETIME")
                         .HasColumnName("criado_em");
 
-                    b.Property<DateTime>("DataDevolucao")
+                    b.Property<DateTime?>("DataDevolucao")
                         .HasColumnType("DATETIME")
                         .HasColumnName("data_devolucao");
 
@@ -125,16 +126,15 @@ namespace Infrastructure.Migrations
                         .HasColumnType("DATETIME")
                         .HasColumnName("data_locacao");
 
+                    b.Property<DateTime>("DataPrazoDevolucao")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<bool>("EhAtivo")
                         .HasColumnType("tinyint(1)")
                         .HasColumnName("ativo");
 
                     b.Property<int>("FilmeId")
                         .HasColumnType("int");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int")
-                        .HasColumnName("status");
 
                     b.Property<DateTime?>("UltimaAtualizacaoEm")
                         .HasColumnType("DATETIME")
@@ -148,8 +148,6 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex(new[] { "Id", "EhAtivo" }, "ix_id_ativo")
                         .HasDatabaseName("ix_id_ativo1");
-
-                    b.HasIndex(new[] { "Status", "EhAtivo" }, "ix_status_ativo");
 
                     b.ToTable("locacoes", (string)null);
                 });

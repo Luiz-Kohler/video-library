@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Application.Common.Exceptions;
+using AutoMapper;
 using Domain.Entities;
 using Domain.IRepositories;
 using MediatR;
@@ -23,10 +24,25 @@ namespace Application.Services.Filmes.Criar
         {
             _logger.LogInformation("Iniciando cadastro de filme.");
 
-            var filme = _mapper.Map<Filme>(request);
+            var filme = await _repository.SelecionarUmaPor(filme => filme.Id == request.Id);
 
-            _logger.LogInformation("Inserindo filme na base");
-            await _repository.Inserir(filme);
+            if(filme is not null && filme.EhAtivo)
+            {
+                var mensagem = "já existe um filme com este id";
+                _logger.LogInformation(mensagem);
+                throw new DuplicateValueException(mensagem);
+
+            } 
+            else if (filme is not null && !filme.EhAtivo)
+            {
+                filme.Atualizar(request.Titulo, request.Classificacao, request.EhLancamento);
+                await _repository.Ativar(filme);
+            }
+            else
+            {
+                filme = _mapper.Map<Filme>(request);
+                await _repository.Inserir(filme);
+            }
 
             return new CriarFilmeResponse();
         }

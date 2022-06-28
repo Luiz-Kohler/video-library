@@ -1,6 +1,7 @@
 ﻿using Application.Services.Locacoes.Atualizar;
 using Application.Services.Locacoes.Buscar;
 using Application.Services.Locacoes.Criar;
+using Application.Services.Locacoes.Devolver;
 using Application.Services.Locacoes.Excluir;
 using Application.Services.Locacoes.Listar;
 using MediatR;
@@ -29,6 +30,13 @@ namespace Web.Controllers
         public async Task<IActionResult> Atualizar([FromBody] AtualizarLocacaoRequest request)
         {
             await _mediator.Send(request);
+            return Ok();
+        }
+
+        [HttpPut("{id}/devolver")]
+        public async Task<IActionResult> Devolver([FromRoute] int id)
+        {
+            await _mediator.Send(new DevolverFilmeRequest { Id = id });
             return Ok();
         }
 

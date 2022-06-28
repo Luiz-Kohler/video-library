@@ -18,12 +18,14 @@ namespace Tests.Unit.Entities
         [Fact]
         public void Deve_criar_filme()
         {
+            var id = _faker.Random.Number();
             var titulo = _faker.Random.String();
             var classificacao = Classificacao.Dez;
             var ehLancamento = _faker.Random.Bool();
 
-            var filme = new Filme(titulo, classificacao, ehLancamento);
+            var filme = new Filme(id, titulo, classificacao, ehLancamento);
 
+            filme.Id.Should().Be(id);
             filme.Titulo.Should().Be(titulo);
             filme.Classificacao.Should().Be(classificacao);
             filme.EhLancamento.Should().Be(ehLancamento);
