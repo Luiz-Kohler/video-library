@@ -1,0 +1,11 @@
+.actions {
+    cursor: pointer;
+}
+
+.gutter-box {
+    padding: 8px 0;
+}
+
+.actions-buttons button {
+    margin: 0 0 0 5px;
+}
