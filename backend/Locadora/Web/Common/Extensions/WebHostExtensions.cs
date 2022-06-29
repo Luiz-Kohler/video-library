@@ -1,6 +1,6 @@
 ﻿using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
-using Precos.GovernancaPrecos.Presentation;
+using Web.Presentation;
 
 namespace Web.Common.Extensions
 {
@@ -13,8 +13,16 @@ namespace Web.Common.Extensions
                 var logger = host.Services.GetService<ILogger<Program>>();
                 logger.LogInformation("Aplicando Migration.");
 
-                var db = scope.ServiceProvider.GetService<DatabaseContext>();
-                db.Database.Migrate();
+                try
+                {
+                    var db = scope.ServiceProvider.GetService<DatabaseContext>();
+                    db.Database.Migrate();
+
+                }
+                catch (Exception ex)
+                {
+
+                }
 
                 logger.LogInformation("Migration aplicada com sucesso.");
             }

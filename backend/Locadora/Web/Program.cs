@@ -1,7 +1,7 @@
 using Web;
 using Web.Common.Extensions;
 
-namespace Precos.GovernancaPrecos.Presentation;
+namespace Web.Presentation;
 
 public class Program
 {
