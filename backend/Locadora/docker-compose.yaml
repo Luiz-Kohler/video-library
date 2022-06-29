@@ -11,7 +11,6 @@ services:
     environment:
       MYSQL_SERVER: 'localhost'
       MYSQL_DATABASE: 'locadora'
-      MYSQL_USER: 'root'
       MYSQL_ROOT_PASSWORD: 'Root@2022'
       MYSQL_PASSWORD: 'Root@2022'
 

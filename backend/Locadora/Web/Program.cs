@@ -1,10 +1,26 @@
 using Web;
+using Web.Common.Extensions;
 
-var builder = WebApplication.CreateBuilder(args);
-var startup = new Startup();
+namespace Precos.GovernancaPrecos.Presentation;
 
-startup.ConfigureServices(builder.Services);
+public class Program
+{
+    protected Program() { }
 
-var app = builder.Build();
-startup.Configure(app);
-app.Run();
+    public static void Main(string[] args)
+    {
+        var host = CreateHostBuilder(args).Build();
+
+        host.RunMigration();
+        host.Run();
+    }
+
+    private static IHostBuilder CreateHostBuilder(string[] args) =>
+        Host.CreateDefaultBuilder(args)
+            .ConfigureWebHostDefaults(webBuilder =>
+            {
+                webBuilder
+                    .UseKestrel(serverOptions => { })
+                    .UseStartup<Startup>();
+            });
+}

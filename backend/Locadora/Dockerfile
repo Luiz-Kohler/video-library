@@ -24,4 +24,7 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0 AS runtime
 WORKDIR /app 
 
 COPY --from=build /app/Web/out ./
+
+EXPOSE 5000
+
 ENTRYPOINT ["dotnet", "Web.dll"]
