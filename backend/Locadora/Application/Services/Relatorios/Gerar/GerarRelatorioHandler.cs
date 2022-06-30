@@ -58,12 +58,8 @@ namespace Application.Services.Relatorios.Gerar
             {
                 var application = excelEngine.Excel;
                 application.DefaultVersion = ExcelVersion.Excel2013;
-                application.IgnoreSheetNameException = true;
 
                 var xlApp = application.Workbooks.Create();
-
-                foreach (var worksheetsDesnecessarios in xlApp.Worksheets.OrderByDescending(x => x.Index).Skip(1).ToList())
-                    worksheetsDesnecessarios.Remove();
 
                 var worksheet = xlApp.Worksheets[0];
                 worksheet.Name = "Clientes com pendências";
