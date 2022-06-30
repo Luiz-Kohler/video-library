@@ -1,7 +1,7 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 import './index.css';
-import { UserOutlined, PlayCircleOutlined, AuditOutlined, GithubOutlined, MailOutlined, HomeOutlined, LinkedinOutlined } from '@ant-design/icons';
+import { UserOutlined, PlayCircleOutlined, AuditOutlined, GithubOutlined, MailOutlined, LinkedinOutlined } from '@ant-design/icons';
 import { Col, Layout, Menu, Row } from 'antd';
 import { useState } from 'react';
 import type { MenuProps } from 'antd';

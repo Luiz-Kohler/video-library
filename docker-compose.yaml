@@ -1,0 +1,33 @@
+
+version: '3'
+
+services:
+  mysql:
+    image: mysql:latest
+    ports:
+     - "3306:3306"
+    volumes:
+      - mysql:/data/mysql
+    restart: always
+    environment:
+      MYSQL_SERVER: 'localhost'
+      MYSQL_DATABASE: 'locadora'
+      MYSQL_ROOT_PASSWORD: 'Root@2022'
+      MYSQL_PASSWORD: 'Root@2022'
+  
+  front:
+    build: ./frontend
+    ports:
+      - "3001:3000"
+    depends_on: 
+      - mysql
+  
+  back:
+    build: ./backend/Locadora
+    ports:
+      - "5000:80"
+    depends_on: 
+      - mysql
+    
+volumes:
+  mysql:

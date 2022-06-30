@@ -1,4 +1,3 @@
-import { Axios, AxiosResponse } from 'axios';
 import api from '../api';
 
 const CONTROLLER = 'relatorios';

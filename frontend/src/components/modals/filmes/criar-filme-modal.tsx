@@ -26,7 +26,6 @@ const CriarFilmeModal: React.FC<CriarFilmeModalProps> = ({ atualizar }) => {
 
     const handleOk = () => {
         CriarFilme(filme).then((res) => {
-            console.log(filme)
             if (res.status === 200) {
                 setFilme({ id: 0, titulo: "", classificacao: Classificacao.Livre, ehLancamento: false })
                 form.resetFields();

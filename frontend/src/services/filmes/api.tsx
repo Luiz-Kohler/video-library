@@ -38,9 +38,6 @@ export const CriarFilme = async (request: CriarFilmeRequest) => {
 }
 
 export const ImportarFilmes = async (arquivoCsv: any) => {
-
-    console.log(arquivoCsv)
-
     let formData = new FormData();
     formData.append("filmes", arquivoCsv)
 

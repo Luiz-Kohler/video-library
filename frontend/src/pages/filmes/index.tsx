@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './index.css'
 import { ExcluirFilme, FilmeResponse, ListarFilmes } from '../../services/filmes/api';
-import { Button, Col, Row, Space, Table, Tooltip } from 'antd';
+import { Col, Row, Space, Table, Tooltip } from 'antd';
 import type { ColumnsType } from 'antd/lib/table';
 import { CheckOutlined, CloseOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import Search from 'antd/lib/input/Search';

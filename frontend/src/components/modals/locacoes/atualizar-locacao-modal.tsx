@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Checkbox, Form, Input, Modal, Select } from 'antd';
+import { Button, Form, Modal, Select } from 'antd';
 import { AtualizarLocacao, AtualizarLocacaoRequest, BuscarLocacao } from '../../../services/locacoes/api';
 import { toast } from 'react-toastify';
 import { FilmeResponse, ListarFilmes } from '../../../services/filmes/api';

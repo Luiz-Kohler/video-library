@@ -1,4 +1,4 @@
-import React, { HtmlHTMLAttributes, InputHTMLAttributes, useMemo  } from 'react';
+import React, { InputHTMLAttributes, useMemo  } from 'react';
 import { MaskedInput } from 'antd-mask-input';
 
 const InputCpfMask: React.FC<InputHTMLAttributes<HTMLInputElement>> = (props : any) => {
