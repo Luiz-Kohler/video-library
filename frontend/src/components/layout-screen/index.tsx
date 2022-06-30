@@ -9,6 +9,8 @@ import Logo from '../../assets/logo'
 import Title from 'antd/lib/typography/Title';
 import { MenuClickEventHandler } from 'rc-menu/lib/interface';
 import { useNavigate } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const { Content, Footer, Sider } = Layout;
 type MenuItem = Required<MenuProps>['items'][number];
@@ -34,10 +36,9 @@ const App = ({ children }: any) => {
   const [collapsed, setCollapsed] = useState(false);
 
   const items: MenuItem[] = [
-    getItem('Home', '1', <HomeOutlined />, () => navigate('/')),
+    getItem('Locações', '1', <AuditOutlined />, () => navigate('/locacoes')),
     getItem('Clientes', '2', <UserOutlined />, () => navigate('/clientes')),
     getItem('Filmes', '3', <PlayCircleOutlined />, () => navigate('/filmes')),
-    getItem('Locações', '4', <AuditOutlined />, () => navigate('/locacoes')),
   ];
 
   return (
@@ -46,6 +47,7 @@ const App = ({ children }: any) => {
         minHeight: '100vh',
       }}
     >
+      <ToastContainer/>
       <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
         <div className="logo" >
           <Logo />

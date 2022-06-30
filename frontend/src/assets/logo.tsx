@@ -3,7 +3,7 @@ import React from 'react';
 
 const Logo = () => (
     <div>
-        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="300px" height="86px" viewBox="0 0 300 86" enable-background="new 0 0 300 86">
+        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="300px" height="86px" viewBox="0 0 300 86" enableBackground="new 0 0 300 86">
             <image id="image0" width="300" height="86" x="0" y="0"
                 href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAABWCAYAAAB1s6tmAAAABGdBTUEAALGPC/xhBQAAACBjSFJN
 AAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAABmJLR0QA/wD/AP+gvaeTAABZ

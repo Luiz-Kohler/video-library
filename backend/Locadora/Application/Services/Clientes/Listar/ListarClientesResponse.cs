@@ -4,7 +4,7 @@ namespace Application.Services.Clientes.Listar
 {
     public class ListarClientesResponse
     {
-        public IList<ClienteResponse> Clientes { get; set; }
+        public List<ClienteResponse> Clientes { get; set; }
 
         public ListarClientesResponse()
         {

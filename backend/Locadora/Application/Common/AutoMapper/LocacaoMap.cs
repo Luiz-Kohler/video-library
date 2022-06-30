@@ -14,7 +14,7 @@ namespace Application.Common.AutoMapper
                 .ForMember(response => response.Cliente, opt => opt.MapFrom(locacao => locacao.Cliente))
                 .ForMember(response => response.Cliente, opt => opt.MapFrom(locacao => locacao.Cliente))
                 .ForMember(response => response.DataLocacao, opt => opt.MapFrom(loacao => loacao.DataLocacao.ToLocalTime()))
-                .ForMember(response => response.DataPrazoDevolucao, opt => opt.MapFrom(loacao => loacao.DataPrazoDevolucao.ToLocalTime()))
+                .ForMember(response => response.Status, opt => opt.MapFrom(loacao => loacao.BuscarStatus()))
                 .ForMember(response => response.DataDevolucao, opt =>
                 {
                     opt.Condition(locacao => locacao.DataDevolucao.HasValue);
@@ -26,6 +26,7 @@ namespace Application.Common.AutoMapper
                 .ForMember(response => response.Cliente, opt => opt.MapFrom(locacao => locacao.Cliente))
                 .ForMember(response => response.DataLocacao, opt => opt.MapFrom(loacao => loacao.DataLocacao.ToLocalTime()))
                 .ForMember(response => response.DataPrazoDevolucao, opt => opt.MapFrom(loacao => loacao.DataPrazoDevolucao.ToLocalTime()))
+                .ForMember(response => response.Status, opt => opt.MapFrom(loacao => loacao.BuscarStatus()))
                 .ForMember(response => response.DataDevolucao, opt =>
                 {
                     opt.Condition(locacao => locacao.DataDevolucao.HasValue);

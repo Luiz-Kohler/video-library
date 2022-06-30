@@ -52,7 +52,7 @@ namespace Application.Services.Relatorios.Gerar
                 .OrderByDescending(filme => filme.Locacoes.Count(locacao => locacao.EhAtivo)).ToList();
 
             var clientes = await _clientesRepository.SelecionarVariasPorIncluindoLocacoes(cliente => cliente.EhAtivo);
-            var segundoClienteQueMaisAlocou = clientes.OrderByDescending(cliente => cliente.Locacoes.Count(locacao => locacao.EhAtivo)).Skip(1).First();
+            var segundoClienteQueMaisAlocou = clientes.OrderByDescending(cliente => cliente.Locacoes.Count(locacao => locacao.EhAtivo)).Skip(1).FirstOrDefault();
 
             using (var excelEngine = new ExcelEngine())
             {
@@ -165,10 +165,10 @@ namespace Application.Services.Relatorios.Gerar
                 worksheetSegundoClienteQueMenosAlugou.Range["A1:D1"].CellStyle.Font.Bold = true;
                 worksheetSegundoClienteQueMenosAlugou.Range["A1:D1"].CellStyle.Color = Color.LightBlue;
 
-                worksheetSegundoClienteQueMenosAlugou.Range[$"A2"].Text = $"{segundoClienteQueMaisAlocou.Id}";
-                worksheetSegundoClienteQueMenosAlugou.Range[$"B2"].Text = segundoClienteQueMaisAlocou.Nome;
-                worksheetSegundoClienteQueMenosAlugou.Range[$"C2"].Text = segundoClienteQueMaisAlocou.Cpf;
-                worksheetSegundoClienteQueMenosAlugou.Range[$"D2"].Text = segundoClienteQueMaisAlocou.DataNascimento.ToLocalTime().ToString("yyyy-MM-dd");
+                worksheetSegundoClienteQueMenosAlugou.Range[$"A2"].Text = $"{segundoClienteQueMaisAlocou?.Id}";
+                worksheetSegundoClienteQueMenosAlugou.Range[$"B2"].Text = segundoClienteQueMaisAlocou?.Nome;
+                worksheetSegundoClienteQueMenosAlugou.Range[$"C2"].Text = segundoClienteQueMaisAlocou?.Cpf;
+                worksheetSegundoClienteQueMenosAlugou.Range[$"D2"].Text = segundoClienteQueMaisAlocou?.DataNascimento.ToLocalTime().ToString("yyyy-MM-dd");
 
                 var stream = new MemoryStream();
                 xlApp.SaveAs(stream);

@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './index.css'
-import { Button, Col, Row, Space, Table, Tag } from 'antd';
+import { Button, Col, Row, Space, Table, Tag, Tooltip } from 'antd';
 import type { ColumnsType } from 'antd/lib/table';
 import { LocacaoStatus, GetLocacaoStatusLabel } from '../../enums/locacao'
-import { EditOutlined, EyeOutlined, DeleteOutlined } from '@ant-design/icons';
+import { EditOutlined, DeleteOutlined, RetweetOutlined, DownloadOutlined } from '@ant-design/icons';
+import { FormataStringData } from '../../utils/dateMethods'
 import Search from 'antd/lib/input/Search';
 import Title from 'antd/lib/typography/Title';
-import LocacaoModal from '../../components/modals/locacao-modal';
+import CriarLocacaoModal from '../../components/modals/locacoes/criar-locacao-modal';
+import AtualizarLocacaoModal from '../../components/modals/locacoes/atualizar-locacao-modal';
+import { DevolverFilme, ExcluirLocacao, ListarLocacoes, LocacaoResponse } from '../../services/locacoes/api';
+import { toast } from 'react-toastify';
+import { BaixarRelatorio } from '../../services/relatorios/api';
 
 const GetColorLabel = (status: LocacaoStatus): string => {
     switch (status) {
@@ -19,99 +24,111 @@ const GetColorLabel = (status: LocacaoStatus): string => {
     }
 }
 
-interface LocacaoType {
-    id: number;
-    cliente: string;
-    filme: string;
-    dataLocacao: Date;
-    dataDevolucao: Date;
-    status: LocacaoStatus;
-}
-
-const columns: ColumnsType<LocacaoType> = [
-    {
-        title: 'Id',
-        dataIndex: 'id',
-        key: 'id',
-    },
-    {
-        title: 'Cliente',
-        dataIndex: 'cliente',
-    },
-    {
-        title: 'Filme',
-        dataIndex: 'filme',
-    },
-    {
-        title: 'Data Locação',
-        dataIndex: 'dataLocacao',
-        render: (_, { dataLocacao }) => dataLocacao.toLocaleDateString()
-    },
-    {
-        title: 'Data Devolução',
-        dataIndex: 'dataDevolucao',
-        render: (_, { dataDevolucao }) => dataDevolucao.toLocaleDateString()
-    },
-    {
-        title: 'Status',
-        dataIndex: 'status',
-        render: (_, { status }) => (
-            <Tag color={GetColorLabel(status)}>
-                {GetLocacaoStatusLabel(status)}
-            </Tag>
-        )
-    },
-    {
-        title: 'Ações',
-        dataIndex: 'acao',
-        render: () => (
-            <Space size="middle">
-                <EditOutlined className='actions' />
-                {/* <EyeOutlined className='actions' /> */}
-                <DeleteOutlined className='actions' style={{ color: 'red' }} />
-            </Space>
-        )
-    },
-];
-
-const data: LocacaoType[] = [
-    {
-        id: 1,
-        cliente: 'John Brown',
-        filme: 'Capitao america',
-        dataLocacao: new Date(),
-        dataDevolucao: new Date(),
-        status: LocacaoStatus.Andamento,
-    },
-    {
-        id: 2,
-        cliente: 'Luiz',
-        filme: 'The Batman',
-        dataLocacao: new Date(),
-        dataDevolucao: new Date(),
-        status: LocacaoStatus.Atrasado,
-    },
-    {
-        id: 3,
-        cliente: 'Monica',
-        filme: 'Homem de ferro',
-        dataLocacao: new Date(),
-        dataDevolucao: new Date(),
-        status: LocacaoStatus.Andamento,
-    },
-    {
-        id: 4,
-        cliente: 'Tiane',
-        filme: 'Harry Potter',
-        dataLocacao: new Date(),
-        dataDevolucao: new Date(),
-        status: LocacaoStatus.Devolvido,
-    },
-];
-
 const Locacoes: React.FC = () => {
+    const [atualizarLocacaoModalVisible, setAtualizarLocacaoModalVisible] = useState<boolean>(false);
+    const [locacaoAtualizarId, setLocacaoAtualizarId] = useState<number>(0);
+    const [filtro, setFiltro] = useState<string>();
+    const [locacoes, setLocacoes] = useState<LocacaoResponse[]>();
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+
+    useEffect(() => {
+        ListarLocacoes().then(res => {
+            setIsLoading(true);
+            setLocacoes(res.locacoes)
+            setIsLoading(false);
+        })
+    }, [isLoading])
+
+    const columns: ColumnsType<LocacaoResponse> = [
+        {
+            title: 'Id',
+            dataIndex: 'id',
+            key: 'id',
+        },
+        {
+            title: 'Cliente',
+            dataIndex: 'cliente',
+            render: (_, { cliente }) => `${cliente.id} - ${cliente.nome}`
+        },
+        {
+            title: 'Filme',
+            dataIndex: 'filme',
+            render: (_, { filme }) => `${filme.id} - ${filme.titulo}`
+
+        },
+        {
+            title: 'Data Locação',
+            dataIndex: 'dataLocacao',
+            render: (_, { dataLocacao }) => FormataStringData(dataLocacao)
+        },
+        {
+            title: 'Data Prazo Devolução',
+            dataIndex: 'dataPrazoDevolucao',
+            render: (_, { dataPrazoDevolucao }) => FormataStringData(dataPrazoDevolucao)
+        },
+        {
+            title: 'Data Devolução',
+            dataIndex: 'dataDevolucao',
+            render: (_, { dataDevolucao }) => dataDevolucao != null ? FormataStringData(dataDevolucao) : ""
+        },
+        {
+            title: 'Status',
+            dataIndex: 'status',
+            render: (_, { status }) => (
+                <Tag color={GetColorLabel(status)}>
+                    {GetLocacaoStatusLabel(status)}
+                </Tag>
+            )
+        },
+        {
+            title: 'Ações',
+            dataIndex: 'acao',
+            render: (_, { id, dataDevolucao }) => (
+                <Space size="middle">
+
+                    {dataDevolucao === null &&
+                        <Tooltip title="Devolver Filme">
+                            <RetweetOutlined className='action' onClick={() => {
+                                DevolverFilme(id)
+                                    .then(() => {
+                                        toast.success(`Locação com Id: ${id} devolvida com sucesso`);
+                                        setIsLoading(true);
+                                    })
+                            }} />
+                        </Tooltip>}
+
+                    <Tooltip title="Editar">
+                        <EditOutlined className='actions' onClick={() => {
+                            setLocacaoAtualizarId(id);
+                            setAtualizarLocacaoModalVisible(true)
+                        }} />
+                    </Tooltip>
+
+                    <Tooltip title="Excluir">
+                        <DeleteOutlined
+                            className='actions'
+                            style={{ color: 'red' }}
+                            onClick={() => {
+                                ExcluirLocacao(id).then(() => {
+                                    toast.success(`Locação com Id: ${id} excluida com sucesso`)
+                                    setIsLoading(true);
+                                });
+                            }}
+                        />
+                    </Tooltip>
+                </Space>
+            )
+        },
+    ];
+
     return (
         <>
+            <AtualizarLocacaoModal
+                isVisible={atualizarLocacaoModalVisible}
+                setVisableFalse={() => setAtualizarLocacaoModalVisible(false)}
+                atualizar={() => setIsLoading(true)}
+                id={locacaoAtualizarId}
+            />
             <Row justify='start'>
                 <Col >
                     <Title>Locações</Title>
@@ -119,15 +136,35 @@ const Locacoes: React.FC = () => {
             </Row>
             <Row justify='space-between' align='middle' className='gutter-box'>
                 <Col>
-                    <Search placeholder="Buscar" enterButton="Pesquisar" />
+                    <Search
+                        placeholder="Buscar por Id"
+                        enterButton="Pesquisar"
+                        onSearch={(value) => setFiltro(value)}
+                        type="number"
+                    />
                 </Col>
-                <Col>
-                    <LocacaoModal />
-                </Col>
+                <Row className='actions-buttons'>
+                    <Button 
+                        type='primary' 
+                        icon={<DownloadOutlined />}
+                        onClick={() => BaixarRelatorio()}
+                    >
+                        Baixar relatório
+                    </Button>
+                    <Col>
+                        <CriarLocacaoModal atualizar={() => setIsLoading(true)} />
+                    </Col>
+                </Row>
             </Row>
             <Row justify='center' align='middle' className='gutter-box'>
                 <Col span={24}>
-                    <Table columns={columns} dataSource={data} scroll={{ x: 800, y:450 }}/>
+                    <Table
+                        columns={columns}
+                        dataSource={locacoes?.filter(locacao => locacao.id.toString().includes(filtro || ""))}
+                        scroll={{ x: 800, y: 450 }}
+                        loading={isLoading}
+                        size='small'
+                    />
                 </Col>
             </Row>
         </>

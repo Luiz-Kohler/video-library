@@ -51,7 +51,7 @@ namespace Application.Services.Locacoes.Atualizar
             var locacao = await _locacoesRepository.SelecionarUmaPor(locacao
                 => locacao.FilmeId == request.FilmeId
                 && locacao.ClienteId == request.ClienteId
-                && locacao.Status == StatusLocacao.Andamento
+                && !locacao.DataDevolucao.HasValue
                 && locacao.EhAtivo);
 
             if (locacao is not null)

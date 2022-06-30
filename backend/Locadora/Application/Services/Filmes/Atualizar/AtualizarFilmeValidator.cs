@@ -2,7 +2,7 @@
 
 namespace Application.Services.Filmes.Atualizar
 {
-    internal class AtualizarFilmeValidator : AbstractValidator<AtualizarFilmeRequest>
+    public class AtualizarFilmeValidator : AbstractValidator<AtualizarFilmeRequest>
     {
         public AtualizarFilmeValidator()
         {

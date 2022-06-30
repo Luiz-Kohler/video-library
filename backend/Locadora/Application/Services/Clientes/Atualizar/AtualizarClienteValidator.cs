@@ -1,5 +1,4 @@
-﻿using Application.Common.Extensions;
-using FluentValidation;
+﻿using FluentValidation;
 
 namespace Application.Services.Clientes.Atualizar
 {

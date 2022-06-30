@@ -27,29 +27,24 @@ namespace Application.Services.Filmes.Importar
           
         public async Task<ImportarFilmesResponse> Handle(ImportarFilmesRequest request, CancellationToken cancellationToken)
         {
-            var filmesCsv = _csvService.ConvertCsvForRecords<FilmeRecord>(request.ArquivoCsv);
+            var filmesCsv = _csvService.ConvertCsvForRecords<FilmeRecord>(request.ArquivoCsv).ToList();
 
             ValidarFilmes(filmesCsv);
 
             var filmesComMesmoIds = await _repository.SelecionarVariasPor(filme => filmesCsv.Select(filmeCsv => filmeCsv.Id).Contains(filme.Id));
 
-            var filmesComMesmoIdsAtivos = filmesComMesmoIds.Where(filme => filme.EhAtivo);
-            if (filmesComMesmoIdsAtivos.Any())
-                throw new DuplicateValueException($"Alguns ids de filmes já estão na base: {String.Join(", ", filmesComMesmoIdsAtivos.Select(filme => filme.Id).ToArray())}");
-
-            var filmesComMesmoIdsInativos = filmesComMesmoIds.Where(filme => !filme.EhAtivo);
-            if (filmesComMesmoIdsInativos.Any())
-                await AtivarFilmes(filmesComMesmoIdsInativos, filmesCsv);
+            if (filmesComMesmoIds.Any())
+                await AtualizarFilmesExistentes(filmesComMesmoIds, filmesCsv);
 
             var novosFilmes = filmesCsv.Where(filmeCsv => !filmesComMesmoIds.Select(filme => filme.Id).Contains(filmeCsv.Id));
 
             if(novosFilmes.Any())
-                await CriarNovosFilmes(filmesCsv);
+                await CriarNovosFilmes(novosFilmes);
 
             return new ImportarFilmesResponse();
         }
 
-        private async Task CriarNovosFilmes(List<FilmeRecord> filmesNovos)
+        private async Task CriarNovosFilmes(IEnumerable<FilmeRecord> filmesNovos)
         {
             var filmes = filmesNovos.Select(filme => _mapper.Map<Filme>(filme)).ToList();
             await _repository.InserirVarios(filmes);
@@ -71,16 +66,18 @@ namespace Application.Services.Filmes.Importar
                 throw new DuplicateValueException("Arquivo .csv não pode conter Ids repetidos");
         }
 
-        private async Task AtivarFilmes(IEnumerable<Filme> filmesInativosDb, List<FilmeRecord> filmesCsv)
+        private async Task AtualizarFilmesExistentes(IEnumerable<Filme> filmesDb, List<FilmeRecord> filmesCsv)
         {
-            var filmesParaAtivar = filmesInativosDb.Select(filme =>
+            var filmesParaAtivar = filmesDb.Select(filmeDb =>
             {
-                var filmeCsv = filmesCsv.First(filmeCsv => filmeCsv.Id == filme.Id);
+                var filmeCsv = filmesCsv.First(filmeCsv => filmeCsv.Id == filmeDb.Id);
 
-                filme.Ativar();
-                filme.Atualizar(filmeCsv.Titulo, filmeCsv.Classificacao.Value, filmeCsv.Lancamento);
+                if (!filmeDb.EhAtivo)
+                    filmeDb.Ativar();
 
-                return filme;
+                filmeDb.Atualizar(filmeCsv.Titulo, filmeCsv.Classificacao.Value, filmeCsv.Lancamento);
+
+                return filmeDb;
             });
 
             await _repository.AtualizarVarios(filmesParaAtivar);

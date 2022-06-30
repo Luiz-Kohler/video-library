@@ -58,7 +58,7 @@ namespace Domain.Entities
                 return StatusLocacao.DevolvidoComAtraso;
             else if (DataDevolucao.HasValue && DataDevolucao < DataPrazoDevolucao)
                 return StatusLocacao.Devolvido;
-            else if (!DataDevolucao.HasValue && DataPrazoDevolucao > DateTime.UtcNow)
+            else if (!DataDevolucao.HasValue && DateTime.UtcNow > DataPrazoDevolucao)
                 return StatusLocacao.Atrasado;
             else 
                 return StatusLocacao.Andamento;

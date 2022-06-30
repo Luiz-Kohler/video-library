@@ -24,7 +24,7 @@ namespace Application.Common.UnitOfWork
                 await transaction.CommitAsync();
                 return result;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 await transaction.Rollback();
                 _rollbackActionsExecuter.ExecuteActions();

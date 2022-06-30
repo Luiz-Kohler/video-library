@@ -1,4 +1,5 @@
 ﻿using Domain.Common;
+using Domain.Common.Extensios;
 
 namespace Domain.Entities
 {
@@ -13,8 +14,8 @@ namespace Domain.Entities
             : base()
         {
             Nome = nome;
-            Cpf = cpf;
-            DataNascimento = TimeZoneInfo.ConvertTimeToUtc(dataNascimento);
+            Cpf = cpf.FormatCpf();
+            DataNascimento = dataNascimento.ToUniversalTime();
         }
 
         public void Atualizar(string nome, DateTime dataNascimento)

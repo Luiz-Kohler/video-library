@@ -1,6 +1,6 @@
 ﻿using Application.Common.Exceptions;
-using Application.Common.Extensions;
 using AutoMapper;
+using Domain.Common.Extensios;
 using Domain.Entities;
 using Domain.IRepositories;
 using MediatR;
@@ -29,12 +29,12 @@ namespace Application.Services.Clientes.Criar
 
             if(cliente is not null)
             {
-                var mensagem = $"Cliente com CPF: {request.Cpf}. Já existe na base.";
+                var mensagem =   $"Cliente com CPF: {request.Cpf}. Já existe na base.";
                 _logger.LogInformation(mensagem);
                 throw new DuplicateValueException(mensagem);
             }
 
-            cliente = _mapper.Map<Cliente>(request);
+            cliente = new Cliente(request.Cpf, request.Nome, request.DataNascimento);
 
             _logger.LogInformation("Inserindo cliente na base");
             await _repository.Inserir(cliente);

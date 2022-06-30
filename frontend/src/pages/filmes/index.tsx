@@ -1,179 +1,90 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './index.css'
-import { Button, Col, Row, Space, Table, Tag } from 'antd';
+import { ExcluirFilme, FilmeResponse, ListarFilmes } from '../../services/filmes/api';
+import { Button, Col, Row, Space, Table, Tooltip } from 'antd';
 import type { ColumnsType } from 'antd/lib/table';
-import { CheckOutlined, CloseOutlined, EditOutlined, EyeOutlined, DeleteOutlined, ImportOutlined } from '@ant-design/icons';
+import { CheckOutlined, CloseOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import Search from 'antd/lib/input/Search';
 import Title from 'antd/lib/typography/Title';
-import FilmeModal from '../../components/modals/filme-modal'
-
-interface FilmeType {
-    id: number;
-    titulo: string;
-    classificacao: number;
-    lancamento: boolean;
-}
-
-const columns: ColumnsType<FilmeType> = [
-    {
-        title: 'Id',
-        dataIndex: 'id',
-        key: 'id',
-    },
-    {
-        title: 'Titulo',
-        dataIndex: 'titulo',
-    },
-    {
-        title: 'Classificação indicativa',
-        dataIndex: 'classificacao',
-    },
-    {
-        title: 'Lançamento',
-        dataIndex: 'lancamento',
-        render: (_, { lancamento }) => lancamento
-            ? <CheckOutlined style={{ color: 'green' }} />
-            : <CloseOutlined style={{ color: 'red' }} />
-    },
-    {
-        title: 'Ações',
-        dataIndex: 'acao',
-        render: () => (
-            <Space size="middle">
-                <EditOutlined className='actions' />
-                {/* <EyeOutlined className='actions' /> */}
-                <DeleteOutlined className='actions' style={{ color: 'red' }} />
-            </Space>
-        )
-    },
-];
-
-const data: FilmeType[] = [
-    {
-        id: 1,
-        titulo: 'HOMEM ARANHA',
-        classificacao: 10,
-        lancamento: true
-    },
-    {
-        id: 2,
-        titulo: 'THE BATMAN',
-        classificacao: 14,
-        lancamento: true
-    },
-    {
-        id: 3,
-        titulo: 'CAPITAO AMERICA',
-        classificacao: 10,
-        lancamento: false
-    },
-    {
-        id: 4,
-        titulo: 'HOMEM DE FERRO',
-        classificacao: 8,
-        lancamento: false
-    },
-    {
-        id: 1,
-        titulo: 'HOMEM ARANHA',
-        classificacao: 10,
-        lancamento: true
-    },
-    {
-        id: 2,
-        titulo: 'THE BATMAN',
-        classificacao: 14,
-        lancamento: true
-    },
-    {
-        id: 3,
-        titulo: 'CAPITAO AMERICA',
-        classificacao: 10,
-        lancamento: false
-    },
-    {
-        id: 4,
-        titulo: 'HOMEM DE FERRO',
-        classificacao: 8,
-        lancamento: false
-    },
-    {
-        id: 1,
-        titulo: 'HOMEM ARANHA',
-        classificacao: 10,
-        lancamento: true
-    },
-    {
-        id: 2,
-        titulo: 'THE BATMAN',
-        classificacao: 14,
-        lancamento: true
-    },
-    {
-        id: 3,
-        titulo: 'CAPITAO AMERICA',
-        classificacao: 10,
-        lancamento: false
-    },
-    {
-        id: 4,
-        titulo: 'HOMEM DE FERRO',
-        classificacao: 8,
-        lancamento: false
-    },
-    {
-        id: 1,
-        titulo: 'HOMEM ARANHA',
-        classificacao: 10,
-        lancamento: true
-    },
-    {
-        id: 2,
-        titulo: 'THE BATMAN',
-        classificacao: 14,
-        lancamento: true
-    },
-    {
-        id: 3,
-        titulo: 'CAPITAO AMERICA',
-        classificacao: 10,
-        lancamento: false
-    },
-    {
-        id: 4,
-        titulo: 'HOMEM DE FERRO',
-        classificacao: 8,
-        lancamento: false
-    },
-    {
-        id: 1,
-        titulo: 'HOMEM ARANHA',
-        classificacao: 10,
-        lancamento: true
-    },
-    {
-        id: 2,
-        titulo: 'THE BATMAN',
-        classificacao: 14,
-        lancamento: true
-    },
-    {
-        id: 3,
-        titulo: 'CAPITAO AMERICA',
-        classificacao: 10,
-        lancamento: false
-    },
-    {
-        id: 4,
-        titulo: 'HOMEM DE FERRO',
-        classificacao: 8,
-        lancamento: false
-    },
-];
+import CriarFilmeModal from '../../components/modals/filmes/criar-filme-modal'
+import AtualizarFilmeModal from '../../components/modals/filmes/atualizar-filme-modal';
+import ImportarFilmesModal from '../../components/modals/filmes/importar-filmes-modal';
+import { toast } from 'react-toastify';
 
 const Filmes: React.FC = () => {
+    const [atualizarFilmeModalVisible, setAtualizarFilmeModalVisible] = useState<boolean>(false);
+    const [filmeAtualizarId, setFilmeAtualizarId] = useState<number>(0);
+    const [filtro, setFiltro] = useState<string>();
+    const [filmes, setFilmes] = useState<FilmeResponse[]>();
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+
+    useEffect(() => {
+        ListarFilmes().then(res => {
+            setIsLoading(true);
+            setFilmes(res.filmes)
+            setIsLoading(false);
+        })
+    }, [isLoading])
+
+    const columns: ColumnsType<FilmeResponse> = [
+        {
+            title: 'Id',
+            dataIndex: 'id',
+            key: 'id',
+        },
+        {
+            title: 'Titulo',
+            dataIndex: 'titulo',
+        },
+        {
+            title: 'Classificação indicativa',
+            dataIndex: 'classificacao',
+        },
+        {
+            title: 'Lançamento',
+            dataIndex: 'lancamento',
+            render: (_, { ehLancamento }) => ehLancamento
+                ? <CheckOutlined style={{ color: 'green' }} />
+                : <CloseOutlined style={{ color: 'red' }} />
+        },
+        {
+            title: 'Ações',
+            dataIndex: 'acao',
+            render: (_, { id }) => (
+                <Space size="middle">
+                    <Tooltip title="Editar">
+                        <EditOutlined onClick={() => {
+                            setFilmeAtualizarId(id);
+                            setAtualizarFilmeModalVisible(true)
+                        }}
+                        />
+                    </Tooltip>
+
+                    <Tooltip title="Excluir">
+                        <DeleteOutlined
+                            className='actions'
+                            style={{ color: 'red' }}
+                            onClick={() => {
+                                ExcluirFilme(id).then(() => {
+                                    toast.success(`Filme com Id: ${id} excluido com sucesso`)
+                                    setIsLoading(true);
+                                });
+                            }}
+                        />
+                    </Tooltip>
+                </Space>
+            )
+        },
+    ];
+
     return (
         <>
+            <AtualizarFilmeModal
+                isVisible={atualizarFilmeModalVisible}
+                setVisableFalse={() => setAtualizarFilmeModalVisible(false)}
+                atualizar={() => setIsLoading(true)}
+                id={filmeAtualizarId}
+            />
             <Row justify='start'>
                 <Col >
                     <Title>Filmes</Title>
@@ -181,25 +92,32 @@ const Filmes: React.FC = () => {
             </Row>
             <Row justify='space-between' align='middle' className='gutter-box'>
                 <Col>
-                    <Search placeholder="Buscar" enterButton="Pesquisar" />
+                    <Search
+                        placeholder="Buscar por Id ou Titulo"
+                        enterButton="Pesquisar"
+                        onSearch={(value) => setFiltro(value.toLocaleLowerCase())}
+                    />
                 </Col>
                 <Col>
                     <Row className='actions-buttons'>
                         <Col>
-                            <Button type="primary">
-                                <ImportOutlined />
-                                Importar
-                            </Button>
+                            <ImportarFilmesModal atualizar={() => setIsLoading(true)} />
                         </Col>
                         <Col>
-                            <FilmeModal />
+                            <CriarFilmeModal atualizar={() => setIsLoading(true)} />
                         </Col>
                     </Row>
                 </Col>
             </Row>
             <Row justify='center' align='middle' className='gutter-box'>
                 <Col span={24}>
-                    <Table columns={columns} dataSource={data} scroll={{ x: 800, y:450 }} />
+                    <Table
+                        columns={columns}
+                        dataSource={filmes?.filter(filme => `${filme.id} - ${filme.titulo}`.toLocaleLowerCase().includes(filtro || ''))}
+                        scroll={{ x: 800, y: 450 }}
+                        loading={isLoading}
+                        size='small'
+                    />
                 </Col>
             </Row>
         </>
