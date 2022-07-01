@@ -21,7 +21,7 @@ namespace Tests.Unit.Entities
         {
             var nome = _faker.Name.FirstName();
             var cpf = CpfUtils.GerarCpf();
-            var dataNascimento = DateTime.MinValue;
+            var dataNascimento = DateTime.MinValue.ToUniversalTime();
 
             var cliente = new Cliente(cpf, nome, dataNascimento);
 

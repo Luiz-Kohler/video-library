@@ -1,11 +1,10 @@
 ﻿namespace Domain.Common.Environments
 {
-    public static class EnvironmentVariables
+    public class EnvironmentVariables : IEnvironmentVariables
     {
-        public static string MySqlServer => Environment.GetEnvironmentVariable("mysql_server") ?? "host.docker.internal";
-        public static uint MySqlPort => uint.Parse(Environment.GetEnvironmentVariable("mysql_port") ?? "3306");
-        public static string MySqlDatabase => Environment.GetEnvironmentVariable("mysql_database") ?? "locadora";
-        public static string MySqlUser => Environment.GetEnvironmentVariable("mysql_user") ?? "root";
-        public static string MySqlPassword => Environment.GetEnvironmentVariable("mysql_password") ?? "Root@2022";
+        public string GetEnvironmentVariable(string variableName)
+        {
+            return System.Environment.GetEnvironmentVariable(variableName);
+        }
     }
 }

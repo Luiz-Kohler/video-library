@@ -1,6 +1,6 @@
 ﻿namespace Application.Services.Filmes.Excluir
 {
-    internal class ExcluirFilmeResponse
+    public class ExcluirFilmeResponse
     {
     }
 }

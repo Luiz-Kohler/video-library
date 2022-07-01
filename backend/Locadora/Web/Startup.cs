@@ -1,5 +1,6 @@
 ﻿using Application;
 using Application.Common.Exceptions;
+using Domain;
 using Infrastructure;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http.Features;
@@ -9,10 +10,10 @@ namespace Web
 {
     public class Startup
     {
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddApplication();
+            services.AddDomain();
             services.AddInfrastructure();
 
             services.AddControllers();
@@ -23,17 +24,15 @@ namespace Web
                 options.AllowStatusCode404Response = true;
             });
 
-            // Tamanho maximo de upload de arquivos
             services.Configure<FormOptions>(x =>
             {
-                x.ValueLengthLimit = 1024 * 1024 * 1024; // 1GB
-                x.MultipartBodyLengthLimit = 1024 * 1024 * 1024; // 1GB
+                x.ValueLengthLimit = 1024 * 1024 * 1024; 
+                x.MultipartBodyLengthLimit = 1024 * 1024 * 1024; 
             });
 
             services.AddSwaggerGen();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app)
         {
             app.UseCors(option => option

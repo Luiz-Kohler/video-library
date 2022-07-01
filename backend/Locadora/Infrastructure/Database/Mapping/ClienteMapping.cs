@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Database.Mapping
 {
-    internal class ClienteMapping : BaseMapping<Cliente>
+    public class ClienteMapping : BaseMapping<Cliente>
     {
         public override string TableName => "clientes";
 

@@ -8,7 +8,7 @@ using Domain.Entities;
 
 namespace Application.Common.AutoMapper
 {
-    internal class FilmeMap : Profile
+    public class FilmeMap : Profile
     {
         public FilmeMap()
         {

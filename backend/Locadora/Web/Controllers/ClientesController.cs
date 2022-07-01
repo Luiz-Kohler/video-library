@@ -18,11 +18,6 @@ namespace Web.Controllers
             _mediator = mediator;
         }
 
-        /// <summary>
-        /// Lista os itens da To-do list.
-        /// </summary>
-        /// <returns>Os itens da To-do list</returns>
-        /// <response code="200">Returna os itens da To-do list cadastrados</response>
         [HttpPost]
         public async Task<IActionResult> Criar([FromBody] CriarClienteRequest request)
         {

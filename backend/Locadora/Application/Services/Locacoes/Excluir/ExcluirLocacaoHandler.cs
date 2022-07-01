@@ -20,7 +20,7 @@ namespace Application.Services.Locacoes.Excluir
         {
             _logger.LogInformation("Iniciando exclusão locação");
 
-            var locacao = await _repository.SelecionarUmaPor(locacao => locacao.Id == request.Id && locacao.EhAtivo);
+            var locacao = await _repository.SelecionarUmaComRelacionamentos(locacao => locacao.Id == request.Id && locacao.EhAtivo);
 
             if (locacao is null)
             {

@@ -7,5 +7,6 @@ namespace Domain.IRepositories
     {
         Task Ativar(Filme filme);
         Task<IList<Filme>> SelecionarVariasPorIncluindoLocacoes(Expression<Func<Filme, bool>> filtro = null);
+        Task<Filme> SelecionarUmaPorIncluindoLocacoes(Expression<Func<Filme, bool>> filtro);
     }
 }

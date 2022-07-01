@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Application.Services.Filmes.Atualizar
 {
-    internal class AtualizarFilmeHandler : IRequestHandler<AtualizarFilmeRequest, AtualizarFilmeResponse>
+    public class AtualizarFilmeHandler : IRequestHandler<AtualizarFilmeRequest, AtualizarFilmeResponse>
     {
         private readonly IFilmesRepository _repository;
         private readonly ILogger<AtualizarFilmeHandler> _logger;

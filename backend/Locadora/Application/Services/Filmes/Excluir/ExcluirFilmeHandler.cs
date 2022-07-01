@@ -1,19 +1,20 @@
 ﻿using Application.Common.Exceptions;
-using AutoMapper;
 using Domain.IRepositories;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace Application.Services.Filmes.Excluir
 {
-    internal class ExcluirFilmeHandler : IRequestHandler<ExcluirFilmeRequest, ExcluirFilmeResponse>
+    public class ExcluirFilmeHandler : IRequestHandler<ExcluirFilmeRequest, ExcluirFilmeResponse>
     {
         private readonly IFilmesRepository _repository;
+        private readonly ILocacoesRepository _locacoesRepository;
         private readonly ILogger<ExcluirFilmeHandler> _logger;
 
-        public ExcluirFilmeHandler(IFilmesRepository repository, ILogger<ExcluirFilmeHandler> logger)
+        public ExcluirFilmeHandler(IFilmesRepository repository, ILocacoesRepository locacoesRepository, ILogger<ExcluirFilmeHandler> logger)
         {
             _repository = repository;
+            _locacoesRepository = locacoesRepository;
             _logger = logger;
         }
 
@@ -21,7 +22,7 @@ namespace Application.Services.Filmes.Excluir
         {
             _logger.LogInformation("Iniciando exclusão de filme.");
 
-            var filme = await _repository.SelecionarUmaPor(filme => filme.Id == request.Id && filme.EhAtivo);
+            var filme = await _repository.SelecionarUmaPorIncluindoLocacoes(filme => filme.Id == request.Id && filme.EhAtivo);
 
             if (filme is null)
             {
@@ -30,6 +31,19 @@ namespace Application.Services.Filmes.Excluir
                 throw new NotFoundException(mensagem);
             }
 
+            var locacoes = filme.Locacoes.Select(locacao =>
+            {
+                locacao.Desativar();
+                return locacao;
+            });
+
+            if (locacoes.Any())
+            {
+                _logger.LogInformation("Excluindo locações atrelado ao filme");
+                await _locacoesRepository.AtualizarVarios(locacoes);
+            }
+
+            _logger.LogInformation("Excluindo filme");
             await _repository.Excluir(filme);
 
             return new ExcluirFilmeResponse();

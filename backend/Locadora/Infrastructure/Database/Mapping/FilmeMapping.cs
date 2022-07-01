@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Database.Mapping
 {
-    internal class FilmeMapping : BaseMapping<Filme>
+    public class FilmeMapping : BaseMapping<Filme>
     {
         public override string TableName => "filmes";
 

@@ -17,6 +17,11 @@ namespace Infrastructure.Database.Repositories
             await Atualizar(filme);
         }
 
+        public async Task<Filme> SelecionarUmaPorIncluindoLocacoes(Expression<Func<Filme, bool>> filtro)
+        {
+            return await Entity.Include(filme => filme.Locacoes).FirstOrDefaultAsync(filtro);
+        }
+
         public async Task<IList<Filme>> SelecionarVariasPorIncluindoLocacoes(Expression<Func<Filme, bool>> filtro = null)
         {
             if (filtro == null)

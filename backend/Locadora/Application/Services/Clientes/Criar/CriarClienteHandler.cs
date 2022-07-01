@@ -27,17 +27,24 @@ namespace Application.Services.Clientes.Criar
 
             var cliente = await _repository.SelecionarUmaPor(cliente => cliente.Cpf == request.Cpf.FormatCpf());
 
-            if(cliente is not null)
+            if(cliente is not null && cliente.EhAtivo)
             {
                 var mensagem =   $"Cliente com CPF: {request.Cpf}. Já existe na base.";
                 _logger.LogInformation(mensagem);
                 throw new DuplicateValueException(mensagem);
             }
+            else if (cliente is not null && !cliente.EhAtivo)
+            {
+                cliente.Atualizar(request.Nome, request.DataNascimento);
+                await _repository.Atualizar(cliente);
+            }
+            else
+            {
+                cliente = new Cliente(request.Cpf, request.Nome, request.DataNascimento);
 
-            cliente = new Cliente(request.Cpf, request.Nome, request.DataNascimento);
-
-            _logger.LogInformation("Inserindo cliente na base");
-            await _repository.Inserir(cliente);
+                _logger.LogInformation("Inserindo cliente na base");
+                await _repository.Inserir(cliente);
+            }
 
             return new CriarClienteResponse();
         }
