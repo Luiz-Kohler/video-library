@@ -12,14 +12,14 @@ export const GetClassificacaoLabel = (status: Classificacao): string => {
         case Classificacao.Livre:
             return 'Livre'
         case Classificacao.Dez:
-            return '10'
+            return '10 anos'
         case Classificacao.Doze:
-            return '12'
+            return '12 anos'
         case Classificacao.Catorze:
-            return '14'
+            return '14 anos'
         case Classificacao.Dezesseis:
-            return '16'
+            return '16 anos'
         default: 
-            return '18'
+            return '18 anos'
     }
 }

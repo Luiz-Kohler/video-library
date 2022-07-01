@@ -10,6 +10,7 @@ import CriarFilmeModal from '../../components/modals/filmes/criar-filme-modal'
 import AtualizarFilmeModal from '../../components/modals/filmes/atualizar-filme-modal';
 import ImportarFilmesModal from '../../components/modals/filmes/importar-filmes-modal';
 import { toast } from 'react-toastify';
+import { GetClassificacaoLabel } from '../../enums/filme';
 
 const Filmes: React.FC = () => {
     const [atualizarFilmeModalVisible, setAtualizarFilmeModalVisible] = useState<boolean>(false);
@@ -39,6 +40,7 @@ const Filmes: React.FC = () => {
         {
             title: 'Classificação indicativa',
             dataIndex: 'classificacao',
+            render: (_, { classificacao }) => GetClassificacaoLabel(classificacao)
         },
         {
             title: 'Lançamento',
