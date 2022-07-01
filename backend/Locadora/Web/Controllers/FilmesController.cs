@@ -19,6 +19,11 @@ namespace Web.Controllers
             _mediator = mediator;
         }
 
+        /// <summary>
+        /// Criar filme
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Criar([FromBody] CriarFilmeRequest request)
         {
@@ -26,7 +31,11 @@ namespace Web.Controllers
             return Ok();
         }
 
-
+        /// <summary>
+        /// Criar filme com arquivo .csv
+        /// </summary>
+        /// <param name="filmes"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("csv")]
         public async Task<IActionResult> CriarComCsv([FromForm] IFormFile filmes)
@@ -35,6 +44,11 @@ namespace Web.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Atualizar filme
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPut]
         public async Task<IActionResult> Atualizar([FromBody] AtualizarFilmeRequest request)
         {
@@ -42,6 +56,11 @@ namespace Web.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Excluir filme
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete]
         [Route("{id}")]
         public async Task<IActionResult> Excluir([FromRoute] int id)
@@ -50,6 +69,11 @@ namespace Web.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Buscar filme pelo Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("{id}")]
         public async Task<IActionResult> Buscar([FromRoute] int id)
@@ -58,6 +82,10 @@ namespace Web.Controllers
             return Ok(response);
         }
 
+        /// <summary>
+        /// Listar filmes
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> Listar()
         {

@@ -18,6 +18,11 @@ namespace Web.Controllers
             _mediator = mediator;
         }
 
+        /// <summary>
+        /// Criar cliente
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Criar([FromBody] CriarClienteRequest request)
         {
@@ -25,6 +30,11 @@ namespace Web.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Atualizar cliente
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPut]
         public async Task<IActionResult> Atualizar([FromBody] AtualizarClienteRequest request)
         {
@@ -32,6 +42,11 @@ namespace Web.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Excluir cliente
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete]
         [Route("{id}")]
         public async Task<IActionResult> Excluir([FromRoute] int id)
@@ -40,6 +55,11 @@ namespace Web.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Buscar cliente pelo Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("{id}")]
         public async Task<IActionResult> Buscar([FromRoute] int id)
@@ -48,6 +68,9 @@ namespace Web.Controllers
             return Ok(response);
         }
 
+        /// <summary>
+        /// Listar todos os clientes
+        /// </summary>
         [HttpGet]
         public async Task<IActionResult> Listar()
         {

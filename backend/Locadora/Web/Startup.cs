@@ -4,7 +4,9 @@ using Domain;
 using Infrastructure;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http.Features;
+using Microsoft.OpenApi.Models;
 using System.Globalization;
+using System.Reflection;
 
 namespace Web
 {
@@ -24,13 +26,20 @@ namespace Web
                 options.AllowStatusCode404Response = true;
             });
 
-            services.Configure<FormOptions>(x =>
+            services.AddSwaggerGen(option =>
             {
-                x.ValueLengthLimit = 1024 * 1024 * 1024; 
-                x.MultipartBodyLengthLimit = 1024 * 1024 * 1024; 
+                option.SwaggerDoc("v1", new OpenApiInfo { Title = "Locadora API", Version = "v1" });
+
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                option.IncludeXmlComments(xmlPath);
             });
 
-            services.AddSwaggerGen();
+            services.Configure<FormOptions>(x =>
+            {
+                x.ValueLengthLimit = 1024 * 1024 * 1024;
+                x.MultipartBodyLengthLimit = 1024 * 1024 * 1024;
+            });
         }
 
         public void Configure(IApplicationBuilder app)

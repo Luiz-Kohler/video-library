@@ -19,6 +19,12 @@ namespace Web.Controllers
             _mediator = mediator;
         }
 
+
+        /// <summary>
+        /// Criar locação
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Criar([FromBody] CriarLocacaoRequest request)
         {
@@ -26,6 +32,11 @@ namespace Web.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Atualizar locação
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPut]
         public async Task<IActionResult> Atualizar([FromBody] AtualizarLocacaoRequest request)
         {
@@ -33,6 +44,11 @@ namespace Web.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Devolver filme da locação
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPut("{id}/devolver")]
         public async Task<IActionResult> Devolver([FromRoute] int id)
         {
@@ -40,6 +56,11 @@ namespace Web.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Excluir locação
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete]
         [Route("{id}")]
         public async Task<IActionResult> Excluir([FromRoute] int id)
@@ -48,6 +69,11 @@ namespace Web.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Buscar locação pelo Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("{id}")]
         public async Task<IActionResult> Buscar([FromRoute] int id)
@@ -56,6 +82,10 @@ namespace Web.Controllers
             return Ok(response);
         }
 
+        /// <summary>
+        /// Listar locações
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> Listar()
         {
