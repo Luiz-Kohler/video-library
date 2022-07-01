@@ -2,7 +2,7 @@ import React from 'react';
 import 'antd/dist/antd.css';
 import './index.css';
 import { UserOutlined, PlayCircleOutlined, AuditOutlined, GithubOutlined, MailOutlined, LinkedinOutlined } from '@ant-design/icons';
-import { Col, Layout, Menu, Row } from 'antd';
+import { Col, Layout, Menu, Row, Tooltip } from 'antd';
 import { useState } from 'react';
 import type { MenuProps } from 'antd';
 import Logo from '../../assets/logo'
@@ -47,7 +47,7 @@ const App = ({ children }: any) => {
         minHeight: '100vh',
       }}
     >
-      <ToastContainer/>
+      <ToastContainer />
       <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
         <div className="logo" >
           <Logo />
@@ -61,7 +61,7 @@ const App = ({ children }: any) => {
           }}
         >
           <Row justify='center' className='flexbox'>
-            <Col style={{maxWidth: '1000px', minWidth: '100px'}}>
+            <Col style={{ maxWidth: '1000px', minWidth: '100px' }}>
               {children}
             </Col>
           </Row>
@@ -71,7 +71,17 @@ const App = ({ children }: any) => {
             textAlign: 'center',
           }}
         >
-          <Title level={5}>Luiz Felipe dos Santos Kohler |  {<MailOutlined />} {<GithubOutlined />} {<LinkedinOutlined />}</Title>
+          <Title level={5}>Luiz Felipe dos Santos Kohler | 
+              <Tooltip title="luizfelipekohler03@gmail.com">
+                <MailOutlined style={{margin: '2px'}}/>
+              </Tooltip>
+              <Tooltip title="Github">
+                <GithubOutlined onClick={() => window.open("https://github.com/Luiz-Kohler")} style={{margin: '2px'}}/>
+              </Tooltip>
+              <Tooltip title="Linkedin">
+                <LinkedinOutlined onClick={() => window.open("https://www.linkedin.com/in/luiz-kohler-50b6a1191/")} style={{margin: '2px'}}/>
+              </Tooltip>
+          </Title>
         </Footer>
       </Layout>
     </Layout>

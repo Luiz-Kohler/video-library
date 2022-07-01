@@ -36,6 +36,7 @@ namespace Application.Services.Clientes.Criar
             else if (cliente is not null && !cliente.EhAtivo)
             {
                 cliente.Atualizar(request.Nome, request.DataNascimento);
+                cliente.Ativar();
                 await _repository.Atualizar(cliente);
             }
             else
