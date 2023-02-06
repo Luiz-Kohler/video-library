@@ -1,7 +1,5 @@
 # Sistema de Locadora
 
-## Um sistema completo de locadora feito para uma etapa do processo seletivo da empresa e-auditoria softwares.
-
 ### Banco de dados
 - MySQL
 
