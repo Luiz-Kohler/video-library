@@ -6,7 +6,7 @@
 ### Backend (API)
 - C# - .NET 6 
 - DDD
-- CQRS com MediatR
+- MediatR
 - EF Core
 - Swagger
 - Logging
